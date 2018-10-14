@@ -1,3 +1,4 @@
+
 - stroke_wn_18_32_10_06.h5 hyperparameters:
 {
     n_filters = 64
@@ -9,6 +10,7 @@
     activation = 'softmax'
     use leakfy_relu layer after skip_connection residual blocks 
 }
+
 
 - stroke_wn_20_11_10_06.h5:
 {
@@ -22,3 +24,14 @@
     use relu layer after skip_connection residual blocks 
 
 } 
+
+
+- qd_rn34_weights00198000.h5: (lb 0.866, categorical 
+				accuracy: 75.1%, Top 3 Accuracy 89.7%)
+{
+    inputs_shape = 64, 64, 3
+    normalized by img/255.
+    optimizer = Adam(lr=1e-4, beta_1=0.9, beta_2=0.999, 
+                     epsilon=1e-08, decay=0.0)
+    num_valid=80 for each category
+}
