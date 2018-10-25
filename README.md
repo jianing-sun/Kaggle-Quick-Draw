@@ -7,21 +7,25 @@ note: there are some good data exploration kernel in Kaggle, e.g. https://www.ka
 
 
 
-- [ ] ~~DRNN (Dilated Residual NN) / NASNet~~ ResNet 50 layers, should I change the input dimension?
+- [x] ~~DRNN (Dilated Residual NN) / NASNet~~ ResNet 50 layers, should I change the input dimension? 
 
 note: NASNet is so big with more than 83 million parameters and I am not sure whether DRNN would has a large improvement. So currently I won't change the network model from RNN50 to avoid wasting time on training with different but uncertain models. (I prefer to use the one I'm familiar with. =) 
 
-- [ ] ~~Change input and output layer with countrycode feature input and predicition~~
+- [x] ~~Change input and output layer with countrycode feature input and predicition~~
 
 note: after browsing several paper about sketch & free hand-writing recognition, none of them use the country code feature, so for now just put a pin in that. 
 
-- [ ] ~~custom loss with country code~~
+- [x] ~~custom loss with country code~~
 
 ditto
 
 - [ ] custom loss with sketch center loss 
 
 note: Inspired from https://link.springer.com/content/pdf/10.1007%2Fs11263-016-0932-3.pdf and http://openaccess.thecvf.com/content_cvpr_2018/CameraReady/2763.pdf 
+
+- [x] data augmentation
+
+random data augmentation among null, random rotate, random flip and global deformation
 
 - new/interesting ideas
   https://www.kaggle.com/c/quickdraw-doodle-recognition/discussion/68006
