@@ -27,5 +27,8 @@ note: Inspired from https://link.springer.com/content/pdf/10.1007%2Fs11263-016-0
 
 random data augmentation among null, random rotate, random flip and global deformation
 
+- [ ] noise removal iwht image entropy
+
+
 - new/interesting ideas
   https://www.kaggle.com/c/quickdraw-doodle-recognition/discussion/68006
