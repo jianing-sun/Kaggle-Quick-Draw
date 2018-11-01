@@ -27,7 +27,17 @@ note: Inspired from https://link.springer.com/content/pdf/10.1007%2Fs11263-016-0
 
 random data augmentation among null, random rotate, random flip and global deformation
 
-- [ ] noise removal iwht image entropy
+half data augmentation, 2/3 data augmentation were added and trained. The latter one I used with SGD and the former one used Adam. Got improved from 0.916 to 0.923 after training 38500 iterations with batch_size=1024, 2/3 data augmentation, SGD. 
+
+- [x] noise removal based on image entropy
+
+done
+
+- [ ] generate last layer features vector for each class
+
+ummm, I wrote the code to extract last layer features but for each category is cost half an hour if I calculate with full csv file. I won't finish for all classes even after the ddl of the competition. Should I reduce the number of instances used? like instead reading each full csv, try to use with limited rows? or just give up.
+
+
 
 
 - new/interesting ideas
