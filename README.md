@@ -37,6 +37,16 @@ done
 
 ummm, I wrote the code to extract last layer features but for each category is cost half an hour if I calculate with full csv file. I won't finish for all classes even after the ddl of the competition. Should I reduce the number of instances used? like instead reading each full csv, try to use with limited rows? or just give up.
 
+- [ ] generate sklearn classification report 
+
+done. it has been save into a .csv file included under the project folder. Some of the classes have pretty low precision, e.g. bus, the great wall of China. Should I use weighted loss function to compenstate the imbalance of instsance number of each class?
+
+- [ ] Loss Functions for Top-k Error: Analysis and Insights
+
+http://openaccess.thecvf.com/content_cvpr_2016/papers/Lapin_Loss_Functions_for_CVPR_2016_paper.pdf
+
+
+
 
 
 
