@@ -1,6 +1,7 @@
-## Quick Draw Kaggle Competition 
+# Quick Draw Kaggle Competition 
 
-- TODO: 
+## TODO
+
 - [x] ~~generate sklearn report to evaluate valid_set and find the problem of overfitting or others~~ data augmentation, flip, rotate, stroke removal with prob, image global deformation
 
 note: there are some good data exploration kernel in Kaggle, e.g. https://www.kaggle.com/chenling0927/what-drawings-are-hard-to-predict, so it's unecessary to do sth similar to what they've done. Basiclly the reason of wrong prediction is some of them are random doodle, many have words in it, and some of them are too complicated with so many storkes. This inspires me that the performance is likely to be improved with appropriate data preprocessing, e.g. data augmentation, stroke removal and image global deformation. 
@@ -37,7 +38,7 @@ done
 
 ummm, I wrote the code to extract last layer features but for each category is cost half an hour if I calculate with full csv file. I won't finish for all classes even after the ddl of the competition. Should I reduce the number of instances used? like instead reading each full csv, try to use with limited rows? or just give up.
 
-- [ ] generate sklearn classification report 
+- [x] generate sklearn classification report 
 
 done. it has been save into a .csv file included under the project folder. Some of the classes have pretty low precision, e.g. bus, the great wall of China. Should I use weighted loss function to compenstate the imbalance of instsance number of each class?
 
