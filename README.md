@@ -41,9 +41,16 @@ ummm, I wrote the code to extract last layer features but for each category is c
 
 done. it has been save into a .csv file included under the project folder. Some of the classes have pretty low precision, e.g. bus, the great wall of China. Should I use weighted loss function to compenstate the imbalance of instsance number of each class?
 
-- [ ] Loss Functions for Top-k Error: Analysis and Insights
+- [ ] ~~Loss Functions for Top-k Error: Analysis and Insights~~
 
 http://openaccess.thecvf.com/content_cvpr_2016/papers/Lapin_Loss_Functions_for_CVPR_2016_paper.pdf
+didnt understand: it is a generalization from categorical cross-entropy loss? I feel it's not. it's more inclined to OVA (one-versus-all) multiclassification method, got confused by the definition of 'classifer'
+
+
+- [ ] Implement Shakedrop Regularization on Resnet50
+
+shake-shake regularization: https://arxiv.org/pdf/1705.07485.pdf
+shake-drop regularization: https://arxiv.org/pdf/1802.02375.pdf
 
 
 
