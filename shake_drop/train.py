@@ -1,5 +1,6 @@
 import argparse
 import os
+import numpy as np
 
 import torch
 import torch.backends.cudnn as cudnn
@@ -64,6 +65,8 @@ cosine_lr_scheduler = cosine_annealing_scheduler(optimizer, args.epochs, args.lr
 
 
 def train(epoch):
+    print(net)
+
     net.train()
     train_loss = 0
     correct = 0
@@ -72,6 +75,8 @@ def train(epoch):
     for batch_idx, (inputs, targets) in enumerate(train_loader):
         inputs = inputs.to(device)
         targets = targets.to(device)
+        print(np.array(inputs).shape)
+
         outputs = net(inputs)
         loss = criterion(outputs, targets)
 
@@ -100,6 +105,7 @@ def test(epoch, best_acc):
     with torch.no_grad():
         for batch_idx, (inputs, targets) in enumerate(test_loader):
             inputs = inputs.to(device)
+
             targets = targets.to(device)
             outputs = net(inputs)
             loss = criterion(outputs, targets)
