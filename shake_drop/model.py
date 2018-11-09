@@ -121,6 +121,7 @@ class ShakeDropNet(nn.Module):
         self.bn_final = nn.BatchNorm2d(self.final_featuremap_dim)
         self.relu_final = nn.ReLU(inplace=True)
         # self.avgpool = nn.AvgPool2d(8)
+        self.avgpool = nn.AdaptiveAvgPool2d(1)
         self.fc = nn.Linear(self.final_featuremap_dim, num_classes)
 
         for m in self.modules():
@@ -162,8 +163,8 @@ class ShakeDropNet(nn.Module):
 
         x = self.bn_final(x)
         x = self.relu_final(x)
-        # x = self.avgpool(x)
-        x = nn.AdaptiveAvgPool2d(1)(x)
+        x = self.avgpool(x)
+        # x = nn.AdaptiveAvgPool2d(1)(x)
         x = x.view(x.size(0), -1)
         x = self.fc(x)
         return x

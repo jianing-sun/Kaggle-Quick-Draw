@@ -17,6 +17,26 @@ from model import shake_drop_net
 from cosine_optim import cosine_annealing_scheduler
 
 
+def metric(logit, truth, is_average=True):
+
+    with torch.no_grad():
+        prob = F.softmax(logit, 1)
+        value, top = prob.topk(3, dim=1, largest=True, sorted=True)
+        correct = top.eq(truth.view(-1, 1).expand_as(top))
+
+        if is_average:
+            # top-3 accuracy
+            correct = correct.float().sum(0, keepdim=False)
+            correct = correct/len(truth)
+
+            top = [correct[0], correct[0]+correct[1], correct[0]+correct[1]+correct[2]]
+            precision = correct[0]/1 + correct[1]/2 + correct[2]/3
+            return precision, top
+
+        else:
+            return correct
+
+
 def drawing_to_image(drawing, H, W):
     point = []
     time = []
@@ -60,7 +80,7 @@ def drawing_to_image(drawing, H, W):
 
 def null_augment(drawing, label, index):
     #     cache = Struct(drawing = drawing.copy(), label = label, index=index)
-    image = drawing_to_image(drawing, 64, 64)
+    image = drawing_to_image(drawing, 128, 128)
     return image, label
 
 
@@ -208,7 +228,7 @@ if __name__ == '__main__':
     train_dataset = DoodleDataset(full_df, train_id, augment=null_augment)
     train_loader = DataLoader(train_dataset,
                               sampler=RandomSampler(train_dataset),
-                              batch_size=128,
+                              batch_size=2048,
                               drop_last=True,
                               # num_workers=2,
                               collate_fn=null_collate)
@@ -217,7 +237,7 @@ if __name__ == '__main__':
 
     valid_loader = DataLoader(valid_dataset,
                               #                           sampler=RandomSampler(valid_dataset),
-                              batch_size=128,
+                              batch_size=2048,
                               drop_last=False,
                               num_workers=2,
                               collate_fn=null_collate)
@@ -246,6 +266,7 @@ if __name__ == '__main__':
     correct = 0
     total = 0
     epoch = 10
+    batch_loss = np.zeros(6, np.float32)
 
     # cosine_lr_scheduler.step()
     for batch_idx, (inputs, targets) in enumerate(train_loader):
@@ -258,17 +279,28 @@ if __name__ == '__main__':
         print(outputs)
 
         loss = criterion(outputs, targets)
+        precision, top = metric(outputs, targets)
 
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
 
-        train_loss += loss.item()
-        _, predicted = outputs.max(1)
-        total += targets.size(0)
-        correct += predicted.eq(targets).sum().item()
+        # train_loss += loss.item()
+        # _, predicted = outputs.max(1)
+        # total += targets.size(0)
+        # correct += predicted.eq(targets).sum().item()
         # if batch_idx % 10 == 0:
-        print('epoch : {} [{}/{}]| loss: {:.3f} | acc: {:.3f}'.format(epoch, batch_idx,
-                                                                          len(train_loader),
-                                                                          train_loss / (batch_idx + 1),
-                                                                          100. * correct / total))
+        # print('epoch : {} [{}/{}]| loss: {:.3f} | acc: {:.3f}'.format(epoch, batch_idx,
+        #                                                                   len(train_loader),
+        #                                                                   train_loss / (batch_idx + 1),
+        #                                                                   100. * correct / total))
+
+        batch_loss[:4] = np.array((loss.item(), top[0].item(), top[2].item(), precision.item(),))
+        print('%0.3f  %0.3f  %0.3f  (%0.3f) ' % (batch_loss[0], batch_loss[1], batch_loss[2], batch_loss[3]))
+
+        if batch_idx % 10 == 0:
+            torch.save(net.state_dict(),  '.results/checkpoint/%d_model.pth' % batch_idx)
+            # torch.save({
+            #     'optimizer': optimizer.state_dict(),
+            #     'epoch': epoch,
+            # },  '/checkpoint/%d_optimizer.pth' % (i))
